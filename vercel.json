@@ -9,6 +9,10 @@
   },
   "rewrites": [
     {
+      "source": "/api/trpc/:path*",
+      "destination": "/api/trpc?path=:path*"
+    },
+    {
       "source": "/manus-storage/:path*",
       "destination": "/api/storage/:path*"
     }
