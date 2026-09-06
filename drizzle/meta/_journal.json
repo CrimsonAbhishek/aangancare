@@ -15,6 +15,13 @@
       "when": 1788729316566,
       "tag": "0001_empty_invaders",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1788734331958,
+      "tag": "0002_skinny_freak",
+      "breakpoints": true
     }
   ]
 }

@@ -1,34 +1,21 @@
-# Aangan Care — Brand specification
+# Aangan Care — Brand and trust specification
 
 ## Design read
 
-- **Artifact:** Public-facing funeral and cremation assistance platform with request workflow and protected operations preview.
-- **Audience:** Indian families seeking immediate clarity or planning support, often on mobile and under emotional stress.
-- **Visual language:** Quiet editorial hospitality — warm ivory, deep ink, muted sage, and a restrained marigold signal for action and care.
-- **Mode:** Greenfield product platform.
-- **Visual variance:** 5/10. Original enough to feel authored, restrained enough to avoid distraction.
-- **Motion intensity:** 2/10. Small lift/colour transitions only; no celebratory motion.
-- **Information density:** 5/10. Clear entry points and short copy, with dedicated resource and operations surfaces.
-- **Asset dependence:** 3/10. One soft floral hero image; the rest is typographic and geometric for speed and flexibility.
-- **Brand fidelity:** 4/10. No supplied brand assets; Aangan Care is a configurable product placeholder.
+Aangan Care is a public-facing funeral and cremation assistance request platform for Indian families who may be under significant emotional stress. The visual language is quiet editorial hospitality: warm ivory, deep ink, muted sage, and a restrained marigold action color. The public experience is intentionally calm and information-light, while the request flow uses progressive disclosure and visible progress to reduce cognitive load.
 
-## Tokens
+## Tokens and accessibility
 
-- **Primary ink:** `#181817`
-- **Sage:** `#435642`
-- **Marigold:** `#B36D16`
-- **Ivory background:** `#FCFAF6`
-- **Cream surface:** `#F7F2E9`
-- **Typography:** Manrope for interface and body; Playfair Display / Georgia fallback for humane editorial headings.
-- **Spacing:** 4px base, dominant 8/16/24/32/48 rhythm.
-- **Radius:** Mostly sharp editorial cards; pills and buttons use full rounding; circular marks are reserved for care/safety signals.
-- **Motion:** 160–220ms `cubic-bezier(.23,1,.32,1)`, transform and opacity only, reduced-motion fallback.
+The primary ink is `#181817`, the body secondary is `#5C5A54`, the accessible marigold text token is `#915B13`, and the sage token is `#435642`. The marigold text token was darkened from the initial concept colour after contrast checking; it now clears 4.5:1 against the ivory background. Focus indicators remain visible and the request form supports keyboard navigation, labelled fields, `aria-current`, pressed states, error alerts, and reduced-motion preferences.
 
-## Assets
+## Assets and copyright posture
 
-- `client/public/favicon.svg` — A monogram favicon with solid dark field and marigold A.
-- `/manus-storage/sa1s1Rs2n3KL_5c9fcda6.jpg` — selected soft jasmine image from the supplied visual research pass; used as the hero image.
+The former temporary watermarked research photograph was removed from the public hero. The current hero is an original CSS/SVG-like abstract botanical composition rendered from gradients and geometric shapes, so it does not rely on an unlicensed third-party photograph. The favicon and PWA icons are generated from the Aangan mark. No third-party maps, chat widgets, social embeds, video players, ad pixels, or external font files are loaded by the current production document.
 
-## Important configuration placeholders
+## Privacy and tracking posture
 
-The UI intentionally does not fabricate a live phone, WhatsApp, email, service area, package pricing, crematorium partnership, or availability claim. These should be connected through the admin/content layer before production launch.
+The current document head does not load the Umami analytics script. The public build uses no optional analytics or advertising storage. Essential authentication cookies may be used for the protected operations area. Development-only Manus diagnostics are injected only by the development Vite plugin and are not part of production output. Authenticated user profile data is no longer copied to localStorage by the client hook.
+
+## Legal and operational posture
+
+The site includes connected privacy, terms, refund/cancellation, and cookie policy routes. These pages deliberately identify the legal entity, business contacts, retention schedule, service areas, pricing, partner responsibilities, and complaint contacts as configuration requirements rather than fabricating them. The final content still requires review by an India-qualified lawyer and confirmation by the operating business before public launch.
