@@ -25,7 +25,7 @@ India’s Digital Personal Data Protection Act, 2023 and the Digital Personal Da
 | Cookies | Added a connected cookie policy. The current production build uses only essential authentication cookies when the protected operations area is used. | Implemented; re-review if optional tools are added |
 | Legal pages | Added connected privacy, terms, refund/cancellation, and cookie routes. | Implemented as clearly labelled drafts requiring business/legal configuration |
 | Accessibility | Added labelled inputs, visible focus support, `role=alert` errors, `aria-current`, `aria-pressed`, keyboard-friendly controls, alt-equivalent text for the abstract hero art, and contrast adjustments. | Implemented; run a specialist audit before launch |
-| Assets | Removed the temporary watermarked hero photograph and replaced it with original CSS artwork. | Implemented |
+| Assets | Restored a clean white-flower hero asset as a managed image, with the note and seal rendered as live HTML; its ownership or licence must be confirmed before production launch. | Implemented; rights review required |
 | Test data | Isolated request unit tests from the shared database and removed automated fixture rows. | Verified: request table count is 0 |
 
 ## Applicable risk areas
@@ -68,7 +68,7 @@ The current copy avoids fake reviews, fabricated customer counts, comparative cl
 
 ### 6. Copyright and third-party assets
 
-The former temporary watermarked research photograph was removed from the public hero. The replacement uses original CSS-rendered artwork. The favicon and brand assets are local project assets.
+The clean white-flower hero asset has been restored as a managed project asset. Its ownership or licence is not confirmed in this build, so it must be cleared or replaced before production launch. The note and care seal remain live HTML rather than baked into the image. The favicon and brand assets are local project assets.
 
 Every future photograph, illustration, map, font, music track, video, logo, review, and AI or stock asset should have a rights record. Retain the licence or assignment, permitted media and territory, duration, attribution requirements, model or property release, and takedown contact. Do not copy an image from search results, social media, a competitor, or a municipal page merely because it is publicly visible.
 

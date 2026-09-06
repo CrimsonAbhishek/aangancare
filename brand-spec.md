@@ -10,7 +10,7 @@ The primary ink is `#181817`, the body secondary is `#5C5A54`, the accessible ma
 
 ## Assets and copyright posture
 
-The former temporary watermarked research photograph was removed from the public hero. The current hero is an original CSS/SVG-like abstract botanical composition rendered from gradients and geometric shapes, so it does not rely on an unlicensed third-party photograph. The favicon and PWA icons are generated from the Aangan mark. No third-party maps, chat widgets, social embeds, video players, ad pixels, or external font files are loaded by the current production document.
+The public hero now uses the clean white-flower asset at `/manus-storage/aangan-white-flower-clean_70e638c2.webp`, with the requested editorial note and care seal rendered as live HTML for responsive layout and accessibility. Confirm its usage rights or replace it with an owned/licensed equivalent before production launch. The favicon and PWA icons are generated from the Aangan mark. No third-party maps, chat widgets, social embeds, video players, ad pixels, or external font files are loaded by the current production document.
 
 ## Privacy and tracking posture
 
