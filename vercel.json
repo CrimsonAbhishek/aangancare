@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist/public",
+  "buildCommand": "pnpm vercel-build",
+  "outputDirectory": "public",
   "framework": null,
   "functions": {
     "api/[...path].ts": {
