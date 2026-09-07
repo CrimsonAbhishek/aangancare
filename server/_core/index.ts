@@ -1,4 +1,5 @@
 import "dotenv/config";
+process.env.NODE_ENV = process.env.NODE_ENV || "development";
 import { createServer } from "http";
 import net from "net";
 import { app } from "./app";

@@ -20,6 +20,7 @@ const requestInput = z.object({
   notes: z.string().max(2000).optional(),
   consentToProcess: z.literal(true),
   termsAcknowledged: z.literal(true),
+  website_url: z.string().optional(),
 });
 
 const createReference = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8);
@@ -37,6 +38,10 @@ export const appRouter = router({
   requests: router({
     create: publicProcedure.input(requestInput).mutation(async ({ input }) => {
       const publicReference = `AC-${createReference()}`;
+      // Spam protection: silently reject bot submissions that filled the honeypot
+      if (input.website_url) {
+        return { referenceNumber: publicReference };
+      }
       await createServiceRequest({
         ...input,
         services: JSON.stringify(input.services),

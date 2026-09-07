@@ -86,6 +86,10 @@ declare global {
   }
 }
 
+// ⚠️ SECURITY NOTE: This API key is embedded in the client-side bundle.
+// This component is currently NOT used on any public page. If you need maps
+// on public pages, move the key to a server-side proxy endpoint (e.g.
+// /api/maps-config) so the raw key is never shipped to the browser.
 const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
 const FORGE_BASE_URL =
   import.meta.env.VITE_FRONTEND_FORGE_API_URL ||

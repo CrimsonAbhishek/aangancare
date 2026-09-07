@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, Check, FileText, LockKeyhole, ShieldCheck } from "lucide-react";
 import { Link } from "wouter";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 type LegalKind = "privacy" | "terms" | "refunds" | "cookies";
 
@@ -51,5 +52,6 @@ const pages: Record<LegalKind, { eyebrow: string; title: string; intro: string; 
 
 export default function LegalPage({ kind }: { kind: LegalKind }) {
   const page = pages[kind];
+  usePageMeta(page.eyebrow, page.intro.slice(0, 160));
   return <div className="inner-page shell legal-page"><Link href="/" className="text-link"><ArrowLeft size={15} /> Back to Aangan</Link><div className="legal-hero"><div><p className="eyebrow">{page.eyebrow}</p><h1>{page.title}</h1><p className="inner-lede">{page.intro}</p><div className="legal-hero-actions"><Link href="/request" className="button button-dark">Start a request <ArrowRight size={15} /></Link><Link href="/contact" className="text-link">Ask a policy question <ArrowRight size={15} /></Link></div></div><div className="legal-card"><span><ShieldCheck size={22} /></span><h3>Draft for configuration</h3><p>Connect the operating entity, policy contact, retention schedule, and approved legal review before public launch.</p><div className="legal-card-foot"><FileText size={15} /> Version: 2026-09-07-draft</div></div></div><div className="legal-sections">{page.sections.map((section) => <section key={section.title}><div className="legal-section-icon"><LockKeyhole size={17} /></div><div><h2>{section.title}</h2><p>{section.body}</p></div></section>)}</div><div className="legal-checklist"><p className="eyebrow">Before launch</p><h2>Make the details <em>real and reviewable.</em></h2><ul><li><Check size={15} /> Add the legal entity and registered contact details.</li><li><Check size={15} /> Confirm retention, access, deletion, and complaint handling.</li><li><Check size={15} /> Have an Indian lawyer review the final policy and service terms.</li></ul></div></div>;
 }

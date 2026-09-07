@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc></url>
-  <url><loc>/services</loc></url>
-  <url><loc>/resources</loc></url>
-  <url><loc>/contact</loc></url>
-  <url><loc>/request</loc></url>
-  <url><loc>/privacy</loc></url>
-  <url><loc>/terms</loc></url>
-  <url><loc>/refunds</loc></url>
-  <url><loc>/cookies</loc></url>
+  <!-- TODO: Replace https://aangancare.com with your production domain before launch -->
+  <url><loc>https://aangancare.com/</loc></url>
+  <url><loc>https://aangancare.com/services</loc></url>
+  <url><loc>https://aangancare.com/resources</loc></url>
+  <url><loc>https://aangancare.com/contact</loc></url>
+  <url><loc>https://aangancare.com/request</loc></url>
+  <url><loc>https://aangancare.com/privacy</loc></url>
+  <url><loc>https://aangancare.com/terms</loc></url>
+  <url><loc>https://aangancare.com/refunds</loc></url>
+  <url><loc>https://aangancare.com/cookies</loc></url>
 </urlset>

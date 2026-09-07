@@ -1,39 +1,261 @@
-import { ArrowRight, Check, ChevronRight, CircleHelp, FileText, HeartHandshake, MapPin, MessageCircle, Package, ShieldCheck, Sparkles, Truck, UserRound } from "lucide-react";
-import { Link, useLocation } from "wouter";
+import { ArrowRight, Check, ChevronRight, CircleHelp, FileText, HeartHandshake, MapPin, MessageCircle, Package, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { Link } from "wouter";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
-const services = [
+export const services = [
   { icon: HeartHandshake, title: "Immediate arrangements", text: "A clear starting point for the first calls, documents, timings, and decisions." },
   { icon: Truck, title: "Transport & movement", text: "Ask about transport, inter-city movement, airport coordination, or freezer box needs where configured." },
   { icon: Sparkles, title: "Ceremony support", text: "Ask about materials, flowers, priest coordination, and practical details where configured." },
   { icon: Package, title: "After-care arrangements", text: "Ask about Asthi Visarjan, Shraddh, Chautha, Terahvi, and related arrangements where configured." },
 ];
 
-const faqs = [
+export const faqs = [
   ["What should I do first after a death?", "Start by ensuring the family is together and the immediate legal or medical steps are underway. Our guide is a general orientation, not a substitute for local authority or professional advice."],
   ["Can someone coordinate from another city?", "The request flow is designed for family members arranging support remotely. Share the current location and preferred contact; a coordinator can clarify what is possible."],
   ["Do you cover my city?", "Coverage is configured location by location. Share your city in a request and availability can be checked rather than assumed."],
 ];
 
 export default function Home() {
-  const [location] = useLocation();
-  if (location === "/services") return <ServicesPage />;
-  if (location === "/resources") return <ResourcesPage />;
-  if (location === "/contact") return <ContactPage />;
+  usePageMeta();
 
-  return <>
-    <section className="hero shell"><div className="hero-copy"><p className="eyebrow"><span className="eyebrow-line" /> Funeral & cremation assistance</p><h1>When the day feels impossible, <em>we make the next step clear.</em></h1><p className="hero-lede">Aangan Care is a calm starting point for families seeking information, a request reference, and a clearer next conversation about funeral and cremation support.</p><div className="hero-actions"><Link href="/request" className="button button-dark">Request assistance <ArrowRight size={16} aria-hidden="true" /></Link><Link href="/#process" className="text-link">See how it works <ChevronRight size={16} aria-hidden="true" /></Link></div><div className="hero-reassurance"><span><Check size={14} aria-hidden="true" /> No payment collected</span><span><Check size={14} aria-hidden="true" /> One clear next step</span><span><Check size={14} aria-hidden="true" /> Details kept minimal</span></div></div><div className="hero-visual"><div className="hero-image-wrap"><img src="/aangan-white-flower-clean.webp" alt="White flowers in soft natural light" /><div className="image-wash" /></div><div className="hero-note"><span className="note-kicker">A quieter way through</span><span>“You don’t have to know what to ask for yet.”</span></div><div className="hero-seal"><span>With</span><strong>care</strong><span>at every step</span></div></div></section>
-    <section className="trust-strip"><div className="shell trust-grid"><div className="trust-intro"><span className="eyebrow-line" /><span>Designed for the moments that need steadiness</span></div><div className="trust-item"><ShieldCheck size={19} aria-hidden="true" /><span><strong>Clear request details</strong><small>Only the information needed to begin</small></span></div><div className="trust-item"><MapPin size={19} aria-hidden="true" /><span><strong>Coverage checked first</strong><small>Availability is not assumed</small></span></div><div className="trust-item"><MessageCircle size={19} aria-hidden="true" /><span><strong>One place to return to</strong><small>Keep your request reference</small></span></div></div></section>
-    <section className="section shell" id="services"><div className="section-heading"><div><p className="eyebrow">What we can help you ask about</p><h2>Practical care, <em>thoughtfully arranged.</em></h2></div><Link href="/services" className="text-link">View support areas <ArrowRight size={15} aria-hidden="true" /></Link></div><div className="service-grid">{services.map(({ icon: Icon, title, text }, index) => <article className="service-card" key={title}><div className="service-index">0{index + 1}</div><Icon size={23} strokeWidth={1.5} aria-hidden="true" /><h3>{title}</h3><p>{text}</p><Link href="/request" aria-label={`Ask about ${title}`}><ArrowRight size={17} aria-hidden="true" /></Link></article>)}</div></section>
-    <section className="process-section" id="process"><div className="shell process-layout"><div className="process-intro"><p className="eyebrow">A simple beginning</p><h2>One conversation.<br /><em>Three clear steps.</em></h2><p>In a difficult moment, you should not have to compare ten options or repeat your story. The first interaction stays focused and human.</p><Link href="/request" className="button button-outline">Begin a request <ArrowRight size={15} aria-hidden="true" /></Link></div><div className="steps"><div className="step"><span className="step-number">01</span><div><h3>Tell us what’s needed</h3><p>Choose immediate or planned support and share the essentials. It takes about two minutes.</p></div></div><div className="step"><span className="step-number">02</span><div><h3>Check what’s possible</h3><p>A coordinator can check location, timing, and configured support before you rely on an answer.</p></div></div><div className="step"><span className="step-number">03</span><div><h3>Keep the next step clear</h3><p>Receive a private request reference and a clear next action for your family.</p></div></div></div></div></section>
-    <section className="split-section shell" id="about"><div className="split-visual"><div className="monogram-large" aria-hidden="true">A</div><span className="split-caption">Aangan means the space that holds a home.</span></div><div className="split-copy"><p className="eyebrow">Why Aangan</p><h2>Support that respects the family, <em>not just the checklist.</em></h2><p>This product is designed to help families move with clarity while leaving room for their own customs, choices, and pace. It does not assume a ritual, affiliation, provider, or location is available.</p><div className="principle-list"><span><Check size={16} aria-hidden="true" /> No assumed rituals or affiliations</span><span><Check size={16} aria-hidden="true" /> Configurable services and coverage</span><span><Check size={16} aria-hidden="true" /> Transparent status before confirmation</span></div><Link href="/resources" className="text-link">Read the family guide <ArrowRight size={15} aria-hidden="true" /></Link></div></section>
-    <section className="resource-section"><div className="shell"><div className="section-heading"><div><p className="eyebrow">A little more certainty</p><h2>Resources for <em>the questions around it.</em></h2></div><Link href="/resources" className="text-link">Visit the guide <ArrowRight size={15} aria-hidden="true" /></Link></div><div className="resource-grid"><article className="resource-feature"><div className="resource-art"><span>01</span><FileText size={29} strokeWidth={1.4} aria-hidden="true" /></div><div><p className="resource-type">Immediate guide</p><h3>What to do in the first few hours</h3><p>A grounded starting point for documents, calls, transport, and the decisions that can wait.</p><Link href="/resources" className="text-link">Read this guide <ArrowRight size={15} aria-hidden="true" /></Link></div></article><article className="resource-small"><CircleHelp size={21} aria-hidden="true" /><div><p className="resource-type">FAQ</p><h3>What information will I need?</h3><Link href="/resources">See answers <ArrowRight size={14} aria-hidden="true" /></Link></div></article><article className="resource-small"><MapPin size={21} aria-hidden="true" /><div><p className="resource-type">Locations</p><h3>Check service availability</h3><Link href="/request">Share your city <ArrowRight size={14} aria-hidden="true" /></Link></div></article></div></div></section>
-    <section className="faq-section shell"><div className="faq-intro"><p className="eyebrow">Frequently asked</p><h2>Questions deserve <em>gentle answers.</em></h2><p>If yours isn’t here, send a request and we’ll help you find the right next question.</p></div><div className="faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<ChevronRight size={17} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div></section>
-    <section className="cta-section shell"><div className="cta-card"><div><p className="eyebrow">Whenever you’re ready</p><h2>Let’s take the <em>next step together.</em></h2><p>Start with what you know. We’ll help make the next question clearer.</p></div><Link href="/request" className="button button-light">Request assistance <ArrowRight size={16} aria-hidden="true" /></Link></div></section>
-  </>;
+  return (
+    <>
+      <section className="hero shell">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            <span className="eyebrow-line" /> Funeral & cremation assistance
+          </p>
+          <h1>When the day feels impossible, <em>we make the next step clear.</em></h1>
+          <p className="hero-lede">
+            Aangan Care is a calm starting point for families seeking information, a request reference, and a clearer next conversation about funeral and cremation support.
+          </p>
+          <div className="hero-actions">
+            <Link href="/request" className="button button-dark">
+              Request assistance <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+            <a href="#process" className="text-link">
+              See how it works <ChevronRight size={16} aria-hidden="true" />
+            </a>
+          </div>
+          <div className="hero-reassurance">
+            <span><Check size={14} aria-hidden="true" /> No payment collected</span>
+            <span><Check size={14} aria-hidden="true" /> One clear next step</span>
+            <span><Check size={14} aria-hidden="true" /> Details kept minimal</span>
+          </div>
+        </div>
+        <div className="hero-visual">
+          <div className="hero-image-wrap">
+            <img src="/aangan-white-flower-clean.webp" alt="White flowers in soft natural light" />
+            <div className="image-wash" />
+          </div>
+          <div className="hero-note">
+            <span className="note-kicker">A quieter way through</span>
+            <span>“You don’t have to know what to ask for yet.”</span>
+          </div>
+          <div className="hero-seal">
+            <span>With</span>
+            <strong>care</strong>
+            <span>at every step</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="trust-strip">
+        <div className="shell trust-grid">
+          <div className="trust-intro">
+            <span className="eyebrow-line" />
+            <span>Designed for the moments that need steadiness</span>
+          </div>
+          <div className="trust-item">
+            <ShieldCheck size={19} aria-hidden="true" />
+            <span>
+              <strong>Clear request details</strong>
+              <small>Only the information needed to begin</small>
+            </span>
+          </div>
+          <div className="trust-item">
+            <MapPin size={19} aria-hidden="true" />
+            <span>
+              <strong>Coverage checked first</strong>
+              <small>Availability is not assumed</small>
+            </span>
+          </div>
+          <div className="trust-item">
+            <MessageCircle size={19} aria-hidden="true" />
+            <span>
+              <strong>One place to return to</strong>
+              <small>Keep your request reference</small>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section className="section shell" id="services">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">What we can help you ask about</p>
+            <h2>Practical care, <em>thoughtfully arranged.</em></h2>
+          </div>
+          <Link href="/services" className="text-link">
+            View support areas <ArrowRight size={15} aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="service-grid">
+          {services.map(({ icon: Icon, title, text }, index) => (
+            <article className="service-card" key={title}>
+              <div className="service-index">0{index + 1}</div>
+              <Icon size={23} strokeWidth={1.5} aria-hidden="true" />
+              <h3>{title}</h3>
+              <p>{text}</p>
+              <Link href="/request" aria-label={`Ask about ${title}`}>
+                <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="process-section" id="process">
+        <div className="shell process-layout">
+          <div className="process-intro">
+            <p className="eyebrow">A simple beginning</p>
+            <h2>One conversation.<br /><em>Three clear steps.</em></h2>
+            <p>
+              In a difficult moment, you should not have to compare ten options or repeat your story. The first interaction stays focused and human.
+            </p>
+            <Link href="/request" className="button button-outline">
+              Begin a request <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="steps">
+            <div className="step">
+              <span className="step-number">01</span>
+              <div>
+                <h3>Tell us what’s needed</h3>
+                <p>Choose immediate or planned support and share the essentials. It takes about two minutes.</p>
+              </div>
+            </div>
+            <div className="step">
+              <span className="step-number">02</span>
+              <div>
+                <h3>Check what’s possible</h3>
+                <p>A coordinator can check location, timing, and configured support before you rely on an answer.</p>
+              </div>
+            </div>
+            <div className="step">
+              <span className="step-number">03</span>
+              <div>
+                <h3>Keep the next step clear</h3>
+                <p>Receive a private request reference and a clear next action for your family.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="split-section shell" id="about">
+        <div className="split-visual">
+          <div className="monogram-large" aria-hidden="true">A</div>
+          <span className="split-caption">Aangan means the space that holds a home.</span>
+        </div>
+        <div className="split-copy">
+          <p className="eyebrow">Why Aangan</p>
+          <h2>Support that respects the family, <em>not just the checklist.</em></h2>
+          <p>
+            This product is designed to help families move with clarity while leaving room for their own customs, choices, and pace. It does not assume a ritual, affiliation, provider, or location is available.
+          </p>
+          <div className="principle-list">
+            <span><Check size={16} aria-hidden="true" /> No assumed rituals or affiliations</span>
+            <span><Check size={16} aria-hidden="true" /> Configurable services and coverage</span>
+            <span><Check size={16} aria-hidden="true" /> Transparent status before confirmation</span>
+          </div>
+          <Link href="/resources" className="text-link">
+            Read the family guide <ArrowRight size={15} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+      <section className="resource-section">
+        <div className="shell">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">A little more certainty</p>
+              <h2>Resources for <em>the questions around it.</em></h2>
+            </div>
+            <Link href="/resources" className="text-link">
+              Visit the guide <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="resource-grid">
+            <article className="resource-feature">
+              <div className="resource-art">
+                <span>01</span>
+                <FileText size={29} strokeWidth={1.4} aria-hidden="true" />
+              </div>
+              <div>
+                <p className="resource-type">Immediate guide</p>
+                <h3>What to do in the first few hours</h3>
+                <p>A grounded starting point for documents, calls, transport, and the decisions that can wait.</p>
+                <Link href="/resources" className="text-link">
+                  Read this guide <ArrowRight size={15} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+            <article className="resource-small">
+              <CircleHelp size={21} aria-hidden="true" />
+              <div>
+                <p className="resource-type">FAQ</p>
+                <h3>What information will I need?</h3>
+                <Link href="/resources">
+                  See answers <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+            <article className="resource-small">
+              <MapPin size={21} aria-hidden="true" />
+              <div>
+                <p className="resource-type">Locations</p>
+                <h3>Check service availability</h3>
+                <Link href="/request">
+                  Share your city <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className="faq-section shell">
+        <div className="faq-intro">
+          <p className="eyebrow">Frequently asked</p>
+          <h2>Questions deserve <em>gentle answers.</em></h2>
+          <p>If yours isn’t here, send a request and we’ll help you find the right next question.</p>
+        </div>
+        <div className="faq-list">
+          {faqs.map(([question, answer]) => (
+            <details key={question}>
+              <summary>
+                {question}
+                <ChevronRight size={17} aria-hidden="true" />
+              </summary>
+              <p>{answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section className="cta-section shell">
+        <div className="cta-card">
+          <div>
+            <p className="eyebrow">Whenever you’re ready</p>
+            <h2>Let’s take the <em>next step together.</em></h2>
+            <p>Start with what you know. We’ll help make the next question clearer.</p>
+          </div>
+          <Link href="/request" className="button button-light">
+            Request assistance <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+    </>
+  );
 }
-
-function ServicesPage() { return <div className="inner-page shell"><p className="eyebrow">Support areas</p><h1>Everything that helps a family <em>move with dignity.</em></h1><p className="inner-lede">Services are configured by location and availability. These are the ways a request may be oriented — not a promise that every option is active in every area.</p><div className="service-directory">{services.concat([{ icon: MessageCircle, title: "A clear point of contact", text: "A request reference and one place to return to when several decisions are moving at once." }]).map(({ icon: Icon, title, text }, index) => <article key={title}><div className="directory-icon"><Icon size={22} aria-hidden="true" /></div><div><span className="service-index">0{index + 1}</span><h3>{title}</h3><p>{text}</p><Link href="/request" className="text-link">Ask about this support <ArrowRight size={15} aria-hidden="true" /></Link></div></article>)}</div><div className="callout"><span><MapPin size={18} aria-hidden="true" /><strong>Coverage is verified, not assumed.</strong></span><p>Tell us your city and preferred timing in a request. A coordinator can confirm what is available before you make a decision.</p><Link href="/request" className="button button-dark button-small">Check my location <ArrowRight size={15} aria-hidden="true" /></Link></div></div> }
-
-function ResourcesPage() { return <div className="inner-page shell"><p className="eyebrow">Family guide</p><h1>Useful information for <em>the moments around a farewell.</em></h1><p className="inner-lede">Clear, culturally aware starting points. This content is educational and should be read alongside guidance from local authorities and professionals.</p><div className="guide-grid"><article className="guide-card guide-primary"><span className="guide-number">01</span><FileText size={28} aria-hidden="true" /><p className="resource-type">Immediate procedures</p><h3>What to do after a death</h3><p>A simple orientation to the first calls, documents, transport, and what can wait until tomorrow.</p><Link href="/resources" className="text-link">Open guide <ArrowRight size={15} aria-hidden="true" /></Link></article><article className="guide-card"><span className="guide-number">02</span><h3>Cremation basics</h3><p>Understand common questions to ask a facility and how to compare options with care.</p><Link href="/resources" className="text-link">Read overview <ArrowRight size={15} aria-hidden="true" /></Link></article><article className="guide-card"><span className="guide-number">03</span><h3>Planning from another city</h3><p>A checklist for family members coordinating remotely, from information sharing to local handovers.</p><Link href="/resources" className="text-link">Read checklist <ArrowRight size={15} aria-hidden="true" /></Link></article></div><div className="faq-section compact"><div className="faq-intro"><p className="eyebrow">Common questions</p><h2>A steadier place to <em>start asking.</em></h2></div><div className="faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<ChevronRight size={17} aria-hidden="true" /></summary><p>{answer}</p></details>)}</div></div></div> }
-
-function ContactPage() { return <div className="inner-page shell contact-page"><div className="contact-copy"><p className="eyebrow">Contact Aangan</p><h1>Tell us what would make <em>today lighter.</em></h1><p className="inner-lede">Business phone, email, service hours, address, and WhatsApp details have not been supplied yet, so this site does not fabricate them. Use the request channel for a private starting point, or ask a policy question through the legal pages.</p><div className="contact-options"><Link href="/request"><HeartHandshake size={19} aria-hidden="true" /><span><strong>Start a request</strong><small>Share only what you’re comfortable sharing</small></span></Link><Link href="/privacy"><ShieldCheck size={19} aria-hidden="true" /><span><strong>Read privacy details</strong><small>See what the current form collects</small></span></Link><Link href="/cookies"><FileText size={19} aria-hidden="true" /><span><strong>Read cookie policy</strong><small>No optional tracking in the current build</small></span></Link><Link href="/terms"><UserRound size={19} aria-hidden="true" /><span><strong>Review the terms</strong><small>Understand what a request reference means</small></span></Link></div></div><div className="contact-card"><span className="contact-card-mark"><ShieldCheck size={30} aria-hidden="true" /></span><p className="eyebrow">Business details required</p><h3>Add the legal entity and verified contact channels before launch.</h3><p>Use the admin/content layer to connect the approved business name, registered address, service areas, hours, support channel, and complaint contact. Do not publish placeholders as if they were live contacts.</p><Link href="/request" className="button button-dark">Start a request <ArrowRight size={15} aria-hidden="true" /></Link></div></div> }
