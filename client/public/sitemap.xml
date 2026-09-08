@@ -45,6 +45,22 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- PROCESS — how it works -->
+  <url>
+    <loc>https://aangancare.com/process</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ABOUT — brand and principles -->
+  <url>
+    <loc>https://aangancare.com/about</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- CONTACT -->
   <url>
     <loc>https://aangancare.com/contact</loc>

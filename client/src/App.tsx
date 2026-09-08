@@ -16,6 +16,8 @@ const RequestPage = lazy(() => import("@/pages/Request"));
 const AdminPage = lazy(() => import("@/pages/Admin"));
 const LegalPage = lazy(() => import("@/pages/Legal"));
 const SitemapPage = lazy(() => import("@/pages/Sitemap"));
+const ProcessPage = lazy(() => import("@/pages/Process"));
+const AboutPage = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function PageLoader() {
@@ -37,6 +39,8 @@ function Router() {
           <Route path="/contact" component={ContactPage} />
           <Route path="/request" component={RequestPage} />
           <Route path="/admin" component={AdminPage} />
+          <Route path="/process" component={ProcessPage} />
+          <Route path="/about" component={AboutPage} />
           <Route path="/privacy">{() => <LegalPage kind="privacy" />}</Route>
           <Route path="/terms">{() => <LegalPage kind="terms" />}</Route>
           <Route path="/refunds">{() => <LegalPage kind="refunds" />}</Route>

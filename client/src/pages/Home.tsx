@@ -37,9 +37,9 @@ export default function Home() {
             <Link href="/request" className="button button-dark">
               Request assistance <ArrowRight size={16} aria-hidden="true" />
             </Link>
-            <a href="#process" className="text-link">
+            <Link href="/process" className="text-link">
               See how it works <ChevronRight size={16} aria-hidden="true" />
-            </a>
+            </Link>
           </div>
           <div className="hero-reassurance">
             <span><Check size={14} aria-hidden="true" /> No payment collected</span>
@@ -127,7 +127,7 @@ export default function Home() {
             <p>
               In a difficult moment, you should not have to compare ten options or repeat your story. The first interaction stays focused and human.
             </p>
-            <Link href="/request" className="button button-outline">
+            <Link href="/process" className="button button-outline">
               Begin a request <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </div>

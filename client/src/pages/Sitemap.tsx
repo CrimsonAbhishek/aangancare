@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, FileText, HeartHandshake, Home, LockKeyhole, Mail, Map, RotateCcw, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, FileText, HeartHandshake, Home, Info, LockKeyhole, Mail, Map, RotateCcw, ShieldCheck, Workflow } from "lucide-react";
 import { Link } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -14,9 +14,21 @@ const siteMap = [
       },
       {
         icon: HeartHandshake,
-        label: "Services",
+        label: "How we help — Services",
         path: "/services",
         description: "Immediate arrangements, transport, ceremony support, and after-care — explore what Aangan Care can help you ask about.",
+      },
+      {
+        icon: Workflow,
+        label: "The process",
+        path: "/process",
+        description: "Understand exactly how Aangan Care works — a two-minute request, honest availability checking, and a private reference number.",
+      },
+      {
+        icon: Info,
+        label: "About Aangan",
+        path: "/about",
+        description: "Why Aangan Care was designed the way it was — calm, honest, and built around the needs of Indian families on a difficult day.",
       },
       {
         icon: Map,
@@ -68,6 +80,7 @@ const siteMap = [
     ],
   },
 ];
+
 
 export default function SitemapPage() {
   usePageMeta(

@@ -2,21 +2,18 @@ import { ArrowUpRight, Clock3, Flower2, Menu, Phone, ShieldCheck, X } from "luci
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { useHashScroll } from "@/hooks/useHashScroll";
 
 const navItems = [
   { label: "How we help", href: "/services" },
-  { label: "The process", href: "/#process" },
+  { label: "The process", href: "/process" },
   { label: "Resources", href: "/resources" },
-  { label: "About Aangan", href: "/#about" },
+  { label: "About Aangan", href: "/about" },
 ];
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
 
-  // Enable smooth anchor scrolling when URL contains #process or #about
-  useHashScroll();
 
   return (
     <div className="site-root">
@@ -113,8 +110,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
             <p className="footer-label">Explore</p>
             <Link href="/services">Services</Link>
             <Link href="/resources">Funeral guide</Link>
-            <Link href="/#about">About us</Link>
-            <Link href="/#process">The process</Link>
+            <Link href="/about">About us</Link>
+            <Link href="/process">The process</Link>
           </div>
 
           <div>
