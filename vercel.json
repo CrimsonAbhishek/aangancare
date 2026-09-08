@@ -15,6 +15,10 @@
     {
       "source": "/manus-storage/:path*",
       "destination": "/api/storage/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
