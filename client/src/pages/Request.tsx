@@ -22,7 +22,12 @@ const steps = ["Your need", "Where & when", "Your contact"];
 const serviceOptions = ["Cremation assistance", "Transport", "Funeral materials", "Priest / ceremony", "After-care arrangements"];
 
 export default function RequestPage() {
-  usePageMeta("Request assistance", "Submit a private request for funeral and cremation assistance. Only essential details are collected.");
+  usePageMeta(
+    "Request Funeral &amp; Cremation Assistance",
+    "Submit a private request for funeral and cremation assistance in India. Choose immediate or planned support, share your city and timing, and receive a clear reference number. No payment collected.",
+    "/request"
+  );
+
   const params = new URLSearchParams(window.location.search);
   const initialUrgency = params.get("urgency") === "immediate" ? "immediate" : "planned";
   const [step, setStep] = useState(0);

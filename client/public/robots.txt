@@ -1,6 +1,28 @@
+# ═══════════════════════════════════════════════════════════════
+#  Aangan Care — robots.txt
+#  https://aangancare.com
+#  NOTE: Replace https://aangancare.com with your production
+#        domain before launch.
+# ═══════════════════════════════════════════════════════════════
+
+# All well-behaved crawlers
 User-agent: *
 Allow: /
+Allow: /services
+Allow: /resources
+Allow: /contact
+Allow: /request
+Allow: /sitemap
+Allow: /privacy
+Allow: /terms
+Allow: /refunds
+Allow: /cookies
+
+# Disallow private/admin areas
 Disallow: /admin
 Disallow: /api/
-# TODO: Replace https://aangancare.com with your production domain before launch
+Disallow: /*.json$
+Disallow: /404
+
+# Sitemaps
 Sitemap: https://aangancare.com/sitemap.xml

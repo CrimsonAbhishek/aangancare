@@ -145,6 +145,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
             <Link href="/terms">Terms</Link>
             <Link href="/refunds">Refunds</Link>
             <Link href="/cookies">Cookies</Link>
+            <Link href="/sitemap">Site map</Link>
           </span>
         </div>
       </footer>

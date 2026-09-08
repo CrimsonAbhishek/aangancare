@@ -10,7 +10,11 @@ export const serviceItems = [
 ];
 
 export default function Services() {
-  usePageMeta("Services", "Explore funeral, cremation, transport, ceremony, and after-care support areas available through Aangan Care.");
+  usePageMeta(
+    "Funeral &amp; Cremation Support Services",
+    "Explore funeral, cremation, transport, ceremony, and after-care support areas available through Aangan Care — immediate arrangements, inter-city transport, priest coordination, Asthi Visarjan, Shraddh, and more.",
+    "/services"
+  );
 
   const allServices = serviceItems.concat([
     { icon: MessageCircle, title: "A clear point of contact", text: "A request reference and one place to return to when several decisions are moving at once." },

@@ -16,7 +16,11 @@ export const faqs = [
 ];
 
 export default function Home() {
-  usePageMeta();
+  usePageMeta(
+    undefined,
+    "Aangan Care is a calm starting point for Indian families seeking funeral and cremation assistance. Immediate arrangements, transport, ceremony support, and after-care — all in one clear request. No payment collected upfront.",
+    "/"
+  );
 
   return (
     <>

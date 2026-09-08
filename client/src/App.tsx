@@ -15,6 +15,7 @@ const ContactPage = lazy(() => import("@/pages/Contact"));
 const RequestPage = lazy(() => import("@/pages/Request"));
 const AdminPage = lazy(() => import("@/pages/Admin"));
 const LegalPage = lazy(() => import("@/pages/Legal"));
+const SitemapPage = lazy(() => import("@/pages/Sitemap"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 function PageLoader() {
@@ -41,6 +42,7 @@ function Router() {
           <Route path="/refunds">{() => <LegalPage kind="refunds" />}</Route>
           <Route path="/cookies">{() => <LegalPage kind="cookies" />}</Route>
           <Route path="/cookie-policy">{() => <LegalPage kind="cookies" />}</Route>
+          <Route path="/sitemap" component={SitemapPage} />
           <Route path="/404" component={NotFound} />
           <Route component={NotFound} />
         </Switch>

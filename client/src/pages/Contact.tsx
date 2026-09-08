@@ -3,7 +3,11 @@ import { Link } from "wouter";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function Contact() {
-  usePageMeta("Contact", "Find contact options and start a private request for funeral and cremation assistance.");
+  usePageMeta(
+    "Contact Aangan Care",
+    "Get in touch with Aangan Care. Start a private funeral or cremation assistance request, read our privacy policy, or ask a policy question. We're here to help families move through a difficult day with clarity.",
+    "/contact"
+  );
 
   return (
     <div className="inner-page shell contact-page">

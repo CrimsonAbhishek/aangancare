@@ -9,7 +9,11 @@ export const resourceFaqs = [
 ];
 
 export default function Resources() {
-  usePageMeta("Family guide & resources", "Clear, culturally aware starting points for families navigating a difficult day.");
+  usePageMeta(
+    "Family Funeral Guide &amp; Bereavement Resources",
+    "Clear, culturally aware starting points for Indian families navigating a difficult day. Guides covering what to do after a death, cremation basics, planning from another city, and common questions answered.",
+    "/resources"
+  );
 
   return (
     <div className="inner-page shell">
