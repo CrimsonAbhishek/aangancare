@@ -31,7 +31,7 @@ export default function Services() {
         {allServices.map(({ icon: Icon, title, text }, index) => (
           <article key={title}>
             <div className="directory-icon">
-              <Icon size={22} aria-hidden="true" />
+              <Icon size={20} strokeWidth={1.2} aria-hidden="true" />
             </div>
             <div>
               <span className="service-index">0{index + 1}</span>

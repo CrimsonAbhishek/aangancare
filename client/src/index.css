@@ -304,7 +304,7 @@ h2 {
 h1 em,
 h2 em {
   color: var(--sage-700);
-  font-style: italic;
+  font-style: normal;
 }
 
 h1 {
@@ -552,8 +552,8 @@ p {
 }
 
 .section {
-  padding-top: 116px;
-  padding-bottom: 125px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
 .section-heading {
@@ -642,8 +642,8 @@ p {
   display: grid;
   grid-template-columns: .9fr 1.1fr;
   gap: 120px;
-  padding-top: 110px;
-  padding-bottom: 110px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
 .process-intro h2 {
@@ -696,8 +696,8 @@ p {
   grid-template-columns: 1fr 1fr;
   gap: 110px;
   align-items: center;
-  padding-top: 125px;
-  padding-bottom: 130px;
+  padding-top: 120px;
+  padding-bottom: 120px;
 }
 
 .split-visual {
@@ -774,7 +774,7 @@ p {
 }
 
 .resource-section {
-  padding-top: 109px;
+  padding-top: 120px;
   padding-bottom: 120px;
   background: var(--cream-100);
 }
@@ -3100,16 +3100,15 @@ button:disabled {
 }
 
 .admin-lock-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  background: #fef2f2;
+  gap: 9px;
   color: #991b1b;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
 }
 
 .admin-lock-icon {
@@ -3296,17 +3295,14 @@ button:disabled {
 }
 
 .audit-modal-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  gap: 9px;
   color: var(--forest-600);
-  background: #eef7ee;
-  padding: 2px 8px;
-  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
 }
 
 .audit-modal-close {

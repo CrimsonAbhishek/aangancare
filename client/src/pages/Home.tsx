@@ -71,21 +71,21 @@ export default function Home() {
             <span>Designed for the moments that need steadiness</span>
           </div>
           <div className="trust-item">
-            <ShieldCheck size={19} aria-hidden="true" />
+            <ShieldCheck size={18} strokeWidth={1.2} aria-hidden="true" />
             <span>
               <strong>Clear request details</strong>
               <small>Only the information needed to begin</small>
             </span>
           </div>
           <div className="trust-item">
-            <MapPin size={19} aria-hidden="true" />
+            <MapPin size={18} strokeWidth={1.2} aria-hidden="true" />
             <span>
               <strong>Coverage checked first</strong>
               <small>Availability is not assumed</small>
             </span>
           </div>
           <div className="trust-item">
-            <MessageCircle size={19} aria-hidden="true" />
+            <MessageCircle size={18} strokeWidth={1.2} aria-hidden="true" />
             <span>
               <strong>One place to return to</strong>
               <small>Keep your request reference</small>
@@ -108,7 +108,7 @@ export default function Home() {
           {services.map(({ icon: Icon, title, text }, index) => (
             <article className="service-card" key={title}>
               <div className="service-index">0{index + 1}</div>
-              <Icon size={23} strokeWidth={1.5} aria-hidden="true" />
+              <Icon size={20} strokeWidth={1.2} aria-hidden="true" />
               <h3>{title}</h3>
               <p>{text}</p>
               <Link href="/request" aria-label={`Ask about ${title}`}>
@@ -169,9 +169,9 @@ export default function Home() {
             This product is designed to help families move with clarity while leaving room for their own customs, choices, and pace. It does not assume a ritual, affiliation, provider, or location is available.
           </p>
           <div className="principle-list">
-            <span><Check size={16} aria-hidden="true" /> No assumed rituals or affiliations</span>
-            <span><Check size={16} aria-hidden="true" /> Configurable services and coverage</span>
-            <span><Check size={16} aria-hidden="true" /> Transparent status before confirmation</span>
+            <span><Check size={15} strokeWidth={1.5} aria-hidden="true" /> No assumed rituals or affiliations</span>
+            <span><Check size={15} strokeWidth={1.5} aria-hidden="true" /> Configurable services and coverage</span>
+            <span><Check size={15} strokeWidth={1.5} aria-hidden="true" /> Transparent status before confirmation</span>
           </div>
           <Link href="/resources" className="text-link">
             Read the family guide <ArrowRight size={15} aria-hidden="true" />
@@ -194,7 +194,7 @@ export default function Home() {
             <article className="resource-feature">
               <div className="resource-art">
                 <span>01</span>
-                <FileText size={29} strokeWidth={1.4} aria-hidden="true" />
+                <FileText size={24} strokeWidth={1.2} aria-hidden="true" />
               </div>
               <div>
                 <p className="resource-type">Immediate guide</p>
@@ -206,7 +206,7 @@ export default function Home() {
               </div>
             </article>
             <article className="resource-small">
-              <CircleHelp size={21} aria-hidden="true" />
+              <CircleHelp size={20} strokeWidth={1.2} aria-hidden="true" />
               <div>
                 <p className="resource-type">FAQ</p>
                 <h3>What information will I need?</h3>
@@ -216,7 +216,7 @@ export default function Home() {
               </div>
             </article>
             <article className="resource-small">
-              <MapPin size={21} aria-hidden="true" />
+              <MapPin size={20} strokeWidth={1.2} aria-hidden="true" />
               <div>
                 <p className="resource-type">Locations</p>
                 <h3>Check service availability</h3>
