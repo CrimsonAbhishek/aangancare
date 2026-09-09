@@ -31,7 +31,12 @@ export const appRouter = router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
       const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      const securePart = cookieOptions.secure ? "; Secure" : "";
+      const sameSitePart = cookieOptions.sameSite ? `; SameSite=${cookieOptions.sameSite}` : "";
+      ctx.res.setHeader(
+        "Set-Cookie",
+        `${COOKIE_NAME}=; Path=${cookieOptions.path || "/"}${securePart}${sameSitePart}; HttpOnly; Max-Age=0`
+      );
       return { success: true } as const;
     }),
   }),

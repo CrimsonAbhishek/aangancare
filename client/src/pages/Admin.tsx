@@ -78,7 +78,7 @@ export default function AdminPage() {
     enabled: Boolean(isAdmin),
   });
 
-  const liveRequests: QueueItem[] = (liveQuery.data ?? []).map((request) => ({
+  const liveRequests: QueueItem[] = (liveQuery.data ?? []).map((request: any) => ({
     ref: request.publicReference,
     person: request.name,
     need: (() => {
