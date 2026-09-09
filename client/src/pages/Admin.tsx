@@ -57,19 +57,42 @@ export default function AdminPage() {
   const { user, loading, isAuthenticated } = useAuth();
 
   if (loading) {
-    return <div>Checking administrator access…</div>;
+    return (
+      <div className="inner-page shell" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "400px", gap: "16px" }}>
+        <p className="eyebrow">Checking access</p>
+        <h2>Verifying administrator session...</h2>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
     return (
-      <button type="button" onClick={() => startLogin()}>
-        Sign in to continue
-      </button>
+      <div className="inner-page shell" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "400px", gap: "16px" }}>
+        <ShieldCheck size={48} strokeWidth={1} color="var(--accent)" />
+        <h2 style={{ marginTop: "8px" }}>Protected Dashboard</h2>
+        <p style={{ color: "var(--ink-500)", marginBottom: "16px", textAlign: "center", maxWidth: "400px" }}>
+          You must be an authorized administrator to access this area. Please sign in to continue.
+        </p>
+        <button type="button" className="button button-dark" onClick={() => startLogin()}>
+          Sign in to continue <ArrowRight size={15} />
+        </button>
+      </div>
     );
   }
 
   if (user?.role !== "admin") {
-    return <div>Administrator access required.</div>;
+    return (
+      <div className="inner-page shell" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "400px", gap: "16px" }}>
+        <ShieldCheck size={48} strokeWidth={1} color="var(--accent)" />
+        <h2 style={{ marginTop: "8px" }}>Administrator access required</h2>
+        <p style={{ color: "var(--ink-500)", marginBottom: "16px", textAlign: "center", maxWidth: "400px" }}>
+          Your account does not have permission to view operations data.
+        </p>
+        <button type="button" className="button button-outline" onClick={() => window.location.href = "/"}>
+          Return to home
+        </button>
+      </div>
+    );
   }
 
   const isAdmin = true;
