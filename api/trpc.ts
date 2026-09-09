@@ -3,22 +3,25 @@ import { appRouter } from "../server/routers";
 import { createContext } from "../server/_core/context";
 
 export default async function handler(req: any, res: any) {
-  const rawUrl = typeof req.url === "string" ? req.url : "/api/trpc";
-  const parsedUrl = new URL(rawUrl, "https://vercel.local");
-  const rawQueryPath = Array.isArray(req.query?.path) ? req.query.path.join("/") : req.query?.path;
-  const procedurePath = rawQueryPath || parsedUrl.searchParams.get("path") || parsedUrl.pathname.match(/^\/api\/trpc\/(.+)$/)?.[1];
+  const rawPath = req.query?.path;
 
-  if (typeof procedurePath !== "string" || procedurePath.length === 0) {
+  const path = Array.isArray(rawPath)
+    ? rawPath.join("/")
+    : typeof rawPath === "string"
+      ? rawPath
+      : "";
+
+  if (!path) {
     res.statusCode = 400;
     res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify({ error: "Missing tRPC procedure path" }));
+    res.end(JSON.stringify({ error: "Missing tRPC path" }));
     return;
   }
 
   await nodeHTTPRequestHandler({
     req,
     res,
-    path: procedurePath,
+    path,
     router: appRouter,
     createContext,
   });

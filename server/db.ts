@@ -1,17 +1,21 @@
 import { desc, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, InsertServiceRequest, serviceRequests, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+let dbInstance: any = null;
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try { _db = drizzle(process.env.DATABASE_URL); } catch (error) { console.warn("[Database] Failed to connect:", error); _db = null; }
+  if (!process.env.DATABASE_URL) {
+    throw new Error("DATABASE_URL is not configured");
   }
-  return _db;
-}
 
+  if (!dbInstance) {
+    const { drizzle } = await import("drizzle-orm/mysql2");
+    dbInstance = drizzle(process.env.DATABASE_URL);
+  }
+
+  return dbInstance;
+}
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) throw new Error("User openId is required for upsert");
   const db = await getDb();

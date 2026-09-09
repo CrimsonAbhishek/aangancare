@@ -24,35 +24,9 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import AdminLockScreen, { isConsoleUnlocked, lockConsole } from "@/components/AdminLockScreen";
 import AuditLogModal from "@/components/AuditLogModal";
 
 type AdminTab = "overview" | "requests" | "locations" | "services" | "resources" | "team" | "config";
-
-const previewRequests = [
-  { ref: "AC-7K4P-26", person: "Family contact", need: "Cremation assistance · Transport", place: "Bengaluru, Karnataka", status: "NEW", time: "8 min ago" },
-  { ref: "AC-4F2M-26", person: "Remote family member", need: "Planned arrangements", place: "Mumbai, Maharashtra", status: "CONTACTED", time: "42 min ago" },
-  { ref: "AC-9D8Q-26", person: "Family contact", need: "After-care arrangements", place: "Delhi NCR", status: "CONFIRMED", time: "Yesterday" },
-  { ref: "AC-2B8V-26", person: "Next of kin", need: "Transport & movement", place: "Hyderabad, Telangana", status: "NEW", time: "2 hours ago" },
-  { ref: "AC-5R1N-26", person: "Family contact", need: "Immediate arrangements", place: "Chennai, Tamil Nadu", status: "CONTACTED", time: "3 hours ago" },
-];
-
-const coverageLocations = [
-  { city: "Bengaluru", state: "Karnataka", status: "Active Coverage", coordinators: "2 Active", sla: "< 30 mins" },
-  { city: "Mumbai", state: "Maharashtra", status: "Active Coverage", coordinators: "2 Active", sla: "< 30 mins" },
-  { city: "Delhi NCR", state: "National Capital Region", status: "Active Coverage", coordinators: "1 Active", sla: "< 45 mins" },
-  { city: "Hyderabad", state: "Telangana", status: "Active Coverage", coordinators: "1 Active", sla: "< 45 mins" },
-  { city: "Chennai", state: "Tamil Nadu", status: "Active Coverage", coordinators: "1 Active", sla: "< 45 mins" },
-  { city: "Kolkata", state: "West Bengal", status: "On-Request Partner", coordinators: "Remote verification", sla: "< 2 hours" },
-  { city: "Pune", state: "Maharashtra", status: "Active Coverage", coordinators: "1 Active", sla: "< 45 mins" },
-];
-
-const managedServices = [
-  { id: "SRV-01", name: "Immediate arrangements", category: "Core Assistance", description: "First calls, document guidance, timing coordination.", active: true },
-  { id: "SRV-02", name: "Transport & movement", category: "Logistics", description: "City hearse, inter-city transport, freezer box coordination.", active: true },
-  { id: "SRV-03", name: "Ceremony support", category: "Customs & Care", description: "Materials, flowers, priest and ground coordination.", active: true },
-  { id: "SRV-04", name: "After-care arrangements", category: "Continuity", description: "Asthi Visarjan, Shraddh, Chautha, and follow-up support.", active: true },
-];
 
 type QueueItem = { ref: string; person: string; need: string; place: string; status: string; time: string };
 
@@ -76,15 +50,32 @@ function downloadQueue(rows: QueueItem[]) {
 
 export default function AdminPage() {
   usePageMeta("Operations", "Protected operations dashboard for managing requests, services, and team access.");
-  const [unlocked, setUnlocked] = useState(() => isConsoleUnlocked());
   const [activeTab, setActiveTab] = useState<AdminTab>("overview");
   const [auditModalOpen, setAuditModalOpen] = useState(false);
   const [requestSearch, setRequestSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("ALL");
-  const { user, isAuthenticated } = useAuth();
+  const { user, loading, isAuthenticated } = useAuth();
+
+  if (loading) {
+    return <div>Checking administrator access…</div>;
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <button type="button" onClick={() => startLogin()}>
+        Sign in to continue
+      </button>
+    );
+  }
+
+  if (user?.role !== "admin") {
+    return <div>Administrator access required.</div>;
+  }
+
+  const isAdmin = true;
 
   const liveQuery = trpc.requests.recent.useQuery(undefined, {
-    enabled: Boolean(unlocked && isAuthenticated && user?.role === "admin"),
+    enabled: Boolean(isAdmin),
   });
 
   const liveRequests: QueueItem[] = (liveQuery.data ?? []).map((request) => ({
@@ -102,7 +93,7 @@ export default function AdminPage() {
     time: new Date(request.createdAt).toLocaleString(),
   }));
 
-  const allRows = liveRequests.length > 0 ? liveRequests : previewRequests;
+  const allRows = liveRequests;
 
   const filteredRequests = useMemo(() => {
     return allRows.filter((row) => {
@@ -116,16 +107,6 @@ export default function AdminPage() {
       return matchesStatus && matchesSearch;
     });
   }, [allRows, statusFilter, requestSearch]);
-
-  const handleLock = () => {
-    lockConsole();
-    setUnlocked(false);
-    toast.info("Console locked.");
-  };
-
-  if (!unlocked) {
-    return <AdminLockScreen onUnlock={() => setUnlocked(true)} />;
-  }
 
   return (
     <div className="admin-page">
@@ -204,14 +185,6 @@ export default function AdminPage() {
           </nav>
 
           <div className="admin-sidebar-bottom">
-            <button
-              type="button"
-              className="admin-lock-action"
-              onClick={handleLock}
-              title="Lock operations console"
-            >
-              <Lock size={14} aria-hidden="true" /> Lock console
-            </button>
             <Link href="/" className="admin-exit">
               View public site <ArrowUpRight size={14} aria-hidden="true" />
             </Link>
@@ -236,16 +209,8 @@ export default function AdminPage() {
             </div>
 
             <div className="admin-user">
-              <button
-                type="button"
-                className="button button-outline button-small"
-                onClick={handleLock}
-                style={{ marginRight: "12px", gap: "6px" }}
-              >
-                <Lock size={13} aria-hidden="true" /> Lock console
-              </button>
               <span className="status-dot" aria-hidden="true" />
-              {isAuthenticated ? "Signed in" : "Preview mode"}
+              {isAuthenticated ? "Signed in" : "Anonymous"}
               <button
                 className="icon-button"
                 type="button"
@@ -254,7 +219,7 @@ export default function AdminPage() {
                   toast.info(
                     isAuthenticated
                       ? "You are signed in to the operations surface."
-                      : "Preview mode is showing sample queue data."
+                      : "You must sign in to access this page."
                   )
                 }
               >
@@ -262,19 +227,6 @@ export default function AdminPage() {
               </button>
             </div>
           </header>
-
-          {!isAuthenticated && (
-            <div className="admin-auth-banner">
-              <ShieldCheck size={18} aria-hidden="true" />
-              <div>
-                <strong>This is a protected operations surface.</strong>
-                <p>Sign in to manage requests, services, team access, and verified location coverage.</p>
-              </div>
-              <button className="button button-dark button-small" type="button" onClick={() => startLogin()}>
-                Sign in to continue <ArrowUpRight size={14} aria-hidden="true" />
-              </button>
-            </div>
-          )}
 
           {/* TAB 1: OVERVIEW */}
           {activeTab === "overview" && (
@@ -294,12 +246,12 @@ export default function AdminPage() {
                 </div>
                 <div className="stat-card">
                   <span>Configured locations</span>
-                  <strong>07</strong>
+                  <strong>0</strong>
                   <small>Verified cities</small>
                 </div>
                 <div className="stat-card">
                   <span>Published services</span>
-                  <strong>04</strong>
+                  <strong>0</strong>
                   <small>Active care areas</small>
                 </div>
               </section>
@@ -416,26 +368,8 @@ export default function AdminPage() {
                   </button>
                 </div>
                 <div className="activity-list">
-                  <div>
-                    <CheckCircle2 size={17} aria-hidden="true" />
-                    <p>
-                      <strong>Public request consent is captured with each submission</strong>
-                      <small>Privacy · current build</small>
-                    </p>
-                  </div>
-                  <div>
-                    <ShieldCheck size={17} aria-hidden="true" />
-                    <p>
-                      <strong>Role-based access is enabled for administrators</strong>
-                      <small>Security · current build</small>
-                    </p>
-                  </div>
-                  <div>
-                    <FileText size={17} aria-hidden="true" />
-                    <p>
-                      <strong>Public legal and cookie routes are connected</strong>
-                      <small>Content · current build</small>
-                    </p>
+                  <div style={{ padding: "36px", textAlign: "center", color: "var(--ink-400)", fontSize: "13px" }}>
+                    No recent system activity.
                   </div>
                 </div>
               </section>
@@ -537,7 +471,7 @@ export default function AdminPage() {
               <div className="panel-heading">
                 <div>
                   <span className="admin-kicker">Operations / Locations</span>
-                  <h2>Configured coverage areas ({coverageLocations.length})</h2>
+                  <h2>Configured coverage areas</h2>
                 </div>
                 <button
                   type="button"
@@ -548,26 +482,8 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div className="request-table">
-                <div className="table-row table-head" style={{ gridTemplateColumns: "1.2fr 1fr 1fr 1fr" }}>
-                  <span>City &amp; State</span>
-                  <span>Coverage Status</span>
-                  <span>Coordinators</span>
-                  <span>Response SLA</span>
-                </div>
-                {coverageLocations.map((loc) => (
-                  <div className="table-row" key={loc.city} style={{ gridTemplateColumns: "1.2fr 1fr 1fr 1fr" }}>
-                    <div>
-                      <strong>{loc.city}</strong>
-                      <small>{loc.state}</small>
-                    </div>
-                    <div>
-                      <span className="status status-confirmed">{loc.status}</span>
-                    </div>
-                    <span>{loc.coordinators}</span>
-                    <small>{loc.sla}</small>
-                  </div>
-                ))}
+              <div style={{ padding: "36px", textAlign: "center", color: "var(--ink-400)", fontSize: "13px" }}>
+                No active locations configured.
               </div>
             </div>
           )}
@@ -578,7 +494,7 @@ export default function AdminPage() {
               <div className="panel-heading">
                 <div>
                   <span className="admin-kicker">Operations / Support Offerings</span>
-                  <h2>Published services ({managedServices.length})</h2>
+                  <h2>Published services</h2>
                 </div>
                 <button
                   type="button"
@@ -589,23 +505,8 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div className="request-table">
-                <div className="table-row table-head" style={{ gridTemplateColumns: ".8fr 1.2fr 1fr 2fr" }}>
-                  <span>Service ID</span>
-                  <span>Support Area</span>
-                  <span>Category</span>
-                  <span>Description</span>
-                </div>
-                {managedServices.map((srv) => (
-                  <div className="table-row" key={srv.id} style={{ gridTemplateColumns: ".8fr 1.2fr 1fr 2fr" }}>
-                    <code>{srv.id}</code>
-                    <div>
-                      <strong>{srv.name}</strong>
-                    </div>
-                    <span>{srv.category}</span>
-                    <small>{srv.description}</small>
-                  </div>
-                ))}
+              <div style={{ padding: "36px", textAlign: "center", color: "var(--ink-400)", fontSize: "13px" }}>
+                No services configured.
               </div>
             </div>
           )}
@@ -627,97 +528,8 @@ export default function AdminPage() {
                 </button>
               </div>
 
-              <div style={{ padding: "21px", display: "grid", gap: "16px" }}>
-                <article style={{ border: "1px solid #eef0eb", padding: "16px", borderRadius: "6px" }}>
-                  <strong style={{ fontSize: "14px" }}>01. What to do after a death</strong>
-                  <p style={{ fontSize: "12px", color: "var(--ink-500)", margin: "6px 0 0" }}>
-                    Immediate legal, medical, transport, and first call orientation. Status: Published.
-                  </p>
-                </article>
-                <article style={{ border: "1px solid #eef0eb", padding: "16px", borderRadius: "6px" }}>
-                  <strong style={{ fontSize: "14px" }}>02. Cremation basics</strong>
-                  <p style={{ fontSize: "12px", color: "var(--ink-500)", margin: "6px 0 0" }}>
-                    Questions to ask a facility, comparing options, electric vs wood pyre. Status: Published.
-                  </p>
-                </article>
-                <article style={{ border: "1px solid #eef0eb", padding: "16px", borderRadius: "6px" }}>
-                  <strong style={{ fontSize: "14px" }}>03. Planning from another city</strong>
-                  <p style={{ fontSize: "12px", color: "var(--ink-500)", margin: "6px 0 0" }}>
-                    Remote coordination checklist, local handover protocols. Status: Published.
-                  </p>
-                </article>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 6: TEAM ACCESS */}
-          {activeTab === "team" && (
-            <div className="panel" style={{ marginTop: "24px" }}>
-              <div className="panel-heading">
-                <div>
-                  <span className="admin-kicker">Operations / Access Control</span>
-                  <h2>Authorized team members &amp; roles</h2>
-                </div>
-              </div>
-              <div className="request-table">
-                <div className="table-row table-head" style={{ gridTemplateColumns: "1.5fr 1fr 1fr 1fr" }}>
-                  <span>User / Email</span>
-                  <span>Role</span>
-                  <span>Access Level</span>
-                  <span>MFA Status</span>
-                </div>
-                <div className="table-row" style={{ gridTemplateColumns: "1.5fr 1fr 1fr 1fr" }}>
-                  <div>
-                    <strong>Super Administrator</strong>
-                    <small>admin@aangancare.com</small>
-                  </div>
-                  <span>Platform Owner</span>
-                  <span className="status status-confirmed">Full Access</span>
-                  <small>Enforced (Hardware Key)</small>
-                </div>
-                <div className="table-row" style={{ gridTemplateColumns: "1.5fr 1fr 1fr 1fr" }}>
-                  <div>
-                    <strong>Duty Coordinator (Bengaluru)</strong>
-                    <small>ops-blr@aangancare.com</small>
-                  </div>
-                  <span>Operations Lead</span>
-                  <span className="status status-contacted">Queue &amp; Location</span>
-                  <small>Enforced (Authenticator App)</small>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 7: CONFIGURATION */}
-          {activeTab === "config" && (
-            <div className="panel" style={{ marginTop: "24px" }}>
-              <div className="panel-heading">
-                <div>
-                  <span className="admin-kicker">Operations / Platform Settings</span>
-                  <h2>Security &amp; Legal Configuration</h2>
-                </div>
-              </div>
-              <div style={{ padding: "21px", display: "grid", gap: "16px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #eef0eb" }}>
-                  <span>Privacy Policy Active Version</span>
-                  <strong>2026-09-07-draft</strong>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #eef0eb" }}>
-                  <span>Terms &amp; Conditions Active Version</span>
-                  <strong>2026-09-07-draft</strong>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #eef0eb" }}>
-                  <span>HSTS (HTTP Strict Transport Security)</span>
-                  <span className="status status-confirmed">31536000s (Preload Active)</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #eef0eb" }}>
-                  <span>Spam Bot Honeypot Protection</span>
-                  <span className="status status-confirmed">Client &amp; Server-Side Enabled</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0" }}>
-                  <span>Rate Limiting</span>
-                  <strong>120 requests / minute per IP</strong>
-                </div>
+              <div style={{ padding: "36px", textAlign: "center", color: "var(--ink-400)", fontSize: "13px" }}>
+                No active configuration displayed.
               </div>
             </div>
           )}

@@ -5,45 +5,6 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 
-type RateLimitEntry = { count: number; resetAt: number };
-const rateLimitEntries = new Map<string, RateLimitEntry>();
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX_REQUESTS = 120;
-
-function getClientKey(req: Request) {
-  const forwarded = req.headers["x-forwarded-for"];
-  const firstForwarded = Array.isArray(forwarded) ? forwarded[0] : forwarded?.split(",")[0];
-  return (firstForwarded || req.ip || "unknown").trim();
-}
-
-function apiRateLimit(req: Request, res: Response, next: NextFunction) {
-  const now = Date.now();
-  const key = getClientKey(req);
-  const existing = rateLimitEntries.get(key);
-  const entry = !existing || existing.resetAt <= now
-    ? { count: 0, resetAt: now + RATE_LIMIT_WINDOW_MS }
-    : existing;
-
-  entry.count += 1;
-  rateLimitEntries.set(key, entry);
-
-  if (rateLimitEntries.size > 5000) {
-    rateLimitEntries.forEach((storedEntry, storedKey) => {
-      if (storedEntry.resetAt <= now) rateLimitEntries.delete(storedKey);
-    });
-  }
-
-  res.setHeader("X-RateLimit-Limit", RATE_LIMIT_MAX_REQUESTS);
-  res.setHeader("X-RateLimit-Remaining", Math.max(0, RATE_LIMIT_MAX_REQUESTS - entry.count));
-
-  if (entry.count > RATE_LIMIT_MAX_REQUESTS) {
-    res.setHeader("Retry-After", Math.ceil((entry.resetAt - now) / 1000));
-    res.status(429).json({ error: "Too many requests. Please try again shortly." });
-    return;
-  }
-
-  next();
-}
 
 function applySecurityHeaders(app: Express) {
   app.disable("x-powered-by");
@@ -72,13 +33,21 @@ export function createApp() {
     res.status(200).json({ ok: true });
   });
 
+  app.get("/api/health/app", async (_req, res) => {
+    try {
+      const { appRouter } = await import("../routers");
+      const { createContext } = await import("./context");
+      if (!appRouter || !createContext) throw new Error("Missing modules");
+      if (!process.env.JWT_SECRET || !process.env.DATABASE_URL) throw new Error("Missing configuration");
+      res.status(200).json({ ok: true });
+    } catch {
+      res.status(500).json({ ok: false, error: "application_not_ready" });
+    }
+  });
+
   registerStorageProxy(app);
   registerOAuthRoutes(app);
 
-  app.use("/api/trpc", apiRateLimit, createExpressMiddleware({
-    router: appRouter,
-    createContext,
-  }));
 
   return app;
 }

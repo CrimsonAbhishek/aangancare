@@ -12,62 +12,7 @@ export interface AuditEntry {
   ip: string;
 }
 
-const DEFAULT_AUDIT_LOGS: AuditEntry[] = [
-  {
-    id: "LOG-9041",
-    timestamp: "2026-09-07 16:45:12",
-    category: "Privacy",
-    event: "CONSENT_CAPTURED",
-    actor: "Public Client / Request Flow",
-    details: "Consent recorded for request under policy version 2026-09-07-draft. No PII leaked.",
-    ip: "127.0.0.1 (localhost)",
-  },
-  {
-    id: "LOG-9040",
-    timestamp: "2026-09-07 16:42:08",
-    category: "Operations",
-    event: "REQUEST_CREATED",
-    actor: "Family Contact (Bangalore)",
-    details: "New service request AC-7K4P-26 recorded with status NEW. Urgency: Immediate.",
-    ip: "127.0.0.1 (localhost)",
-  },
-  {
-    id: "LOG-9039",
-    timestamp: "2026-09-07 15:30:44",
-    category: "Security",
-    event: "RATE_LIMIT_CHECK",
-    actor: "API Security Middleware",
-    details: "Traffic within normal thresholds (3 requests/min). Express rate limit nominal.",
-    ip: "127.0.0.1 (localhost)",
-  },
-  {
-    id: "LOG-9038",
-    timestamp: "2026-09-07 14:15:20",
-    category: "System",
-    event: "HEALTH_CHECK_PASSED",
-    actor: "System Watchdog",
-    details: "All system services healthy. Database connectivity OK. TRPC router operational.",
-    ip: "Internal",
-  },
-  {
-    id: "LOG-9037",
-    timestamp: "2026-09-07 12:08:19",
-    category: "Operations",
-    event: "STATUS_UPDATE",
-    actor: "Coordinator (operations)",
-    details: "Request AC-4F2M-26 status transitioned from NEW to CONTACTED.",
-    ip: "127.0.0.1 (localhost)",
-  },
-  {
-    id: "LOG-9036",
-    timestamp: "2026-09-07 10:45:00",
-    category: "Security",
-    event: "SESSION_AUTHENTICATED",
-    actor: "Admin Team",
-    details: "Protected operations surface unlocked via administrative passkey command.",
-    ip: "127.0.0.1 (localhost)",
-  },
-];
+const DEFAULT_AUDIT_LOGS: AuditEntry[] = [];
 
 interface AuditLogModalProps {
   isOpen: boolean;
@@ -109,31 +54,10 @@ export default function AuditLogModal({ isOpen, onClose }: AuditLogModalProps) {
   };
 
   return (
-    <div className="audit-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="audit-modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="audit-modal-header">
+    <div className="modal-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
+      <div className="modal-content large" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
           <div>
-            <div className="audit-modal-badge">
-              <ShieldCheck size={15} aria-hidden="true" />
-              <span>Immutable System Record</span>
-            </div>
-            <h2>Audit Trail & System Activity</h2>
-            <p>Cryptographically verifiable event log for operational and compliance tracking.</p>
-          </div>
-          <button type="button" className="audit-modal-close" onClick={onClose} aria-label="Close audit log">
-            <X size={20} />
-          </button>
-        </div>
-
-        <div className="audit-modal-toolbar">
-          <div className="audit-search-wrap">
-            <Search size={16} aria-hidden="true" />
-            <input
-              type="text"
-              placeholder="Search events, actors, or details..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
           </div>
           <div className="audit-filter-wrap">
             <Filter size={15} aria-hidden="true" />
